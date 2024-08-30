@@ -1,0 +1,114 @@
+# 334. Increasing Triplet Subsequence
+
+**Difficulty**: Medium
+
+## Problem Statement
+Given an integer array `nums`, return `true` if there exists a triple of indices `(i, j, k)` such that `i < j < k` and `nums[i] < nums[j] < nums[k]`. If no such indices exist, return `false`.
+
+### Examples
+
+**Example 1:**
+- **Input**: `nums = [1,2,3,4,5]`
+- **Output**: `true`
+- **Explanation**: Any triplet where `i < j < k` is valid.
+
+**Example 2:**
+- **Input**: `nums = [5,4,3,2,1]`
+- **Output**: `false`
+- **Explanation**: No triplet exists.
+
+**Example 3:**
+- **Input**: `nums = [2,1,5,0,4,6]`
+- **Output**: `true`
+- **Explanation**: The triplet `(3, 4, 5)` is valid because `nums[3] == 0 < nums[4] == 4 < nums[5] == 6`.
+
+### Constraints
+- 1 <= nums.length <= 5 * 105
+- -231 <= nums[i] <= 231 - 1
+
+### Follow-up
+Could you implement a solution that runs in O(n) time complexity and O(1) space complexity?
+
+## Solution
+
+```java
+
+package com.ib.p01_arraystring;
+import java.util.Arrays;
+
+public class LP8IncresingTripletSubSeq {
+
+	public static void main(String[] args) {
+		new Solution8().increasingTriplet2(new int[] { 20,100,10,12,5,13,14,12 });
+	}
+
+}
+
+class Solution8 {
+
+	// In this solution there are some concern raised as for this test case it is
+	// false: 20, 100, 10, 12, 5, 13
+	// This should be true as 10<12<13 where 2<3<5 so constraint are being followed
+	// here.
+	public boolean increasingTriplet(int[] nums) {
+		
+		if(nums.length<3)
+			return false;
+
+		int smallest = Integer.MAX_VALUE;
+		int secondSmallest = Integer.MAX_VALUE;
+
+		for (int i : nums) {
+			if (i <= smallest)
+				smallest = i;
+			else if (i <= secondSmallest)
+				secondSmallest = i;
+			else {
+				System.out.println(smallest + " " + secondSmallest + " " + " " + i);
+				return true;
+			}
+
+		}
+		System.out.println(smallest + " " + secondSmallest);
+		return false;
+	}
+
+	// This algorithm work on basis that it finds all the mins till the index i left
+	// to right
+	// Then find all the max till the index i right to left
+	// Then find that if the current index value is greater then all min to left and
+	// less then all max to right
+	public boolean increasingTriplet2(int[] nums) {
+
+		if (nums == null || nums.length < 3) {
+			return false;
+		}
+		int[] minArr = new int[nums.length];
+		int[] maxArr = new int[nums.length];
+
+		int minVal = Integer.MAX_VALUE;
+		int maxVal = Integer.MIN_VALUE;
+
+		for (int i = 0; i < nums.length; i++) {
+			minVal = Math.min(minVal, nums[i]);
+			minArr[i] = minVal;
+		}
+
+		for (int i = nums.length - 1; i >= 0; i--) {
+			maxVal = Math.max(maxVal, nums[i]);
+			maxArr[i] = maxVal;
+		}
+		boolean result = false;
+		for (int i = 1; i < nums.length - 1; i++) {
+			if (minArr[i - 1] < nums[i] && nums[i] < maxArr[i + 1]) {
+				System.out.println(minArr[i - 1] + " " + nums[i] + " " + maxArr[i + 1]);
+				result = true;
+				break;
+			}
+		}
+		System.out.println(result);
+		System.out.println(Arrays.toString(minArr));
+		System.out.println(Arrays.toString(maxArr));
+		return result;
+	}
+}
