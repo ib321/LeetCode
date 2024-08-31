@@ -47,6 +47,7 @@ class Solution15 {
 
 		char[] strCharArr = s.toCharArray();
 		int currVowelCount = 0;
+		// Checking only with lower case vowel letters assuming input always will be in lowercase.
 		for (int i = 0; i < k; i++) {
 			boolean isVowel = strCharArr[i] == 'a' || strCharArr[i] == 'e' || strCharArr[i] == 'i'
 					|| strCharArr[i] == 'o' || strCharArr[i] == 'u';
@@ -60,8 +61,9 @@ class Solution15 {
 					|| strCharArr[i] == 'o' || strCharArr[i] == 'u';
 			if (isNextCharVowel)
 				currVowelCount++;
-			boolean wasPrevCharVowel = strCharArr[i - k] == 'a' || strCharArr[i - k] == 'e' || strCharArr[i - k] == 'i'
-					|| strCharArr[i - k] == 'o' || strCharArr[i - k] == 'u';
+			int prevCharIndex = i - k;
+			boolean wasPrevCharVowel = strCharArr[prevCharIndex] == 'a' || strCharArr[prevCharIndex] == 'e' || strCharArr[prevCharIndex] == 'i'
+					|| strCharArr[prevCharIndex] == 'o' || strCharArr[prevCharIndex] == 'u';
 			if (wasPrevCharVowel)
 				currVowelCount--;
 			if (currVowelCount > maxVowelCount)
