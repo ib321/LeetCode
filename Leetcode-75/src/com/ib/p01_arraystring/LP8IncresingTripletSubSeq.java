@@ -33,17 +33,21 @@ class Solution8 {
 				System.out.println(smallest + " " + secondSmallest + " " + " " + i);
 				return true;
 			}
-
 		}
 		System.out.println(smallest + " " + secondSmallest);
 		return false;
 	}
 
-	// This algorithm work on basis that it finds all the mins till the index i left
-	// to right
-	// Then find all the max till the index i right to left
-	// Then find that if the current index value is greater then all min to left and
-	// less then all max to right
+	/*-
+	 * Approach: 
+	 * 	This method uses two auxiliary arrays, minArr and maxArr,
+	 *  to store the minimum values up to the current index and the maximum values from the current index to the end
+	 *  It then checks if there exists an element that is greater than all previous minimums and less than all subsequent maximums.
+	 * 	if yes then we proved that there exists a triple indices
+	 *  
+	 * @param nums
+	 * @return
+	 */
 	public boolean increasingTriplet2(int[] nums) {
 
 		if (nums == null || nums.length < 3) {
@@ -64,6 +68,7 @@ class Solution8 {
 			maxVal = Math.max(maxVal, nums[i]);
 			maxArr[i] = maxVal;
 		}
+
 		boolean result = false;
 		for (int i = 1; i < nums.length - 1; i++) {
 			if (minArr[i - 1] < nums[i] && nums[i] < maxArr[i + 1]) {
@@ -72,8 +77,8 @@ class Solution8 {
 				break;
 			}
 		}
-		System.out.println(result);
-		System.out.println(Arrays.toString(minArr));
+//		System.out.println(result);
+//		System.out.println(Arrays.toString(minArr));
 		System.out.println(Arrays.toString(maxArr));
 		return result;
 	}

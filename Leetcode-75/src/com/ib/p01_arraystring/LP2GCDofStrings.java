@@ -11,6 +11,23 @@ public class LP2GCDofStrings {
 
 class Solution2 {
 	 
+	/**
+	 * Solution In Problem: 
+	 * For two strings s and t, we say "t divides s" if and only if s = t + t + ... + t + t
+	 *  (i.e., t is concatenated with itself one or more times).
+	 *  So first check this above condition : string if concatenated should be repeating:
+	 *  str1+str2 = str2 + str1
+	 *  
+	 *  then once this is true then only gcd can be found :
+	 *  find the gcd of length of strings and result will be substring from 0 to gcd.
+	 * 
+	 * @param str1
+	 * @param str2
+	 * @return return the largest string x such that x divides both str1 and str2.
+	 * Input: str1 = "ABCABC", str2 = "ABC"  -- Output: "ABC"
+	 * Input: str1 = "ABABAB", str2 = "ABAB" -- Output: "AB"
+	 * Input: str1 = "LEET", str2 = "CODE"   -- Output: ""
+	 */
 	public String gcdOfStrings(String str1, String str2) {
 
 		if (!((str1 + str2).equals(str2 + str1)))
@@ -32,7 +49,7 @@ class Solution2 {
 		return GCD;
 	}
 	
-	// Didn't worked try another logic
+	// This logic is not working
 	public String gcdOfStrings0(String str1, String str2) {
 		String Smallstr = str1;
 		String BigStr = str2;

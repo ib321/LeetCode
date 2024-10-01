@@ -6,67 +6,96 @@ import java.util.List;
 public class LP5RevVowelInString {
 
 	public static void main(String[] args) {
-
-		System.out.println(new Solution5().reverseVowels2("leetcode"));
-		;
-
+		System.out.println(new Solution5().reverseVowels2("leetcode")); //"leotcede"
 	}
-
 }
 
 class Solution5 {
+
+	/**
+	 * Approach:
+	 * 	first extract all vowels in an char array.
+	 * 	loop StringToChar in reverse and check if vowel add into vowels list
+	 * 	this gives the reversed char array list
+	 * 	again loop array: check if vowel: replace current element with the first revVowels array.
+	 * @param s : string whose vowel is to be reversed
+	 * @return new string with it's only vowel reversed.
+	 */
 	public String reverseVowels(String s) {
-
-		char[] resultchararr = new char[s.length()];
 		char[] stringToChar = s.toCharArray();
-
-		List<Character> vowels = new ArrayList<Character>();
+		List<Character> revVowels = new ArrayList<Character>();
 
 		for (int i = s.length() - 1; i >= 0; i--) {
-			boolean isSmallVowels = stringToChar[i] == 'a' || stringToChar[i] == 'e' || stringToChar[i] == 'i'
-					|| stringToChar[i] == 'o' || stringToChar[i] == 'u';
-			boolean isCapVowels = stringToChar[i] == 'A' || stringToChar[i] == 'E' || stringToChar[i] == 'I'
-					|| stringToChar[i] == 'O' || stringToChar[i] == 'U';
-			if (isSmallVowels || isCapVowels) {
-				vowels.add(stringToChar[i]);
+			char c = stringToChar[i];
+			if (isVowel(c)) {
+				revVowels.add(c);
 			}
 		}
-
 		int index = 0;
 		for (int i = 0; i < s.length(); i++) {
-			resultchararr[i] = stringToChar[i];
-			boolean isSmallVowels = stringToChar[i] == 'a' || stringToChar[i] == 'e' || stringToChar[i] == 'i'
-					|| stringToChar[i] == 'o' || stringToChar[i] == 'u';
-			boolean isCapVowels = stringToChar[i] == 'A' || stringToChar[i] == 'E' || stringToChar[i] == 'I'
-					|| stringToChar[i] == 'O' || stringToChar[i] == 'U';
-			if (isSmallVowels || isCapVowels) {
-				resultchararr[i] = vowels.get(index++);
+			char c = stringToChar[i];
+			if (isVowel(c)) {
+				stringToChar[i] = revVowels.get(index++);
 			}
 		}
-		System.out.println(String.valueOf(resultchararr));
-		return String.valueOf(resultchararr);
+		return String.valueOf(stringToChar);
 	}
 
+	/**
+	 * using indexOf function of string if it contain that char it returns non -1
+	 * if it doesn't returns -1;
+	 * @param c
+	 * @return
+	 */
+	private boolean isVowel(char c) {
+		String vowels = "aeiouAEIOU";
+		return vowels.indexOf(c) != -1;
+	}
+
+
+	/**
+	 * Two pointers, left and right initialized at 0 and last-1
+	 * while left < right : move left++ and right-- one steps
+	 * move left++ until it find a vowel at left
+	 * then move right-- until it finds a vowel
+	 * so this way if both points to vowel
+	 * reverse both char :
+	 * 	store char[left] on temp
+	 * 	put char[right] into char[left]
+	 * 	put temp into char[right]
+	 * 	now do both left++ and right--;
+	 * @param s
+	 * @return
+	 */
 	public String reverseVowels2(String s) {
-		StringBuilder sb = new StringBuilder(s);
-		int i = 0;
-		int j = s.length() - 1;
-		while (i < j) {
-			char ch1 = s.charAt(i);
-			char ch2 = s.charAt(j);
-			if (ch1 == 'a' || ch1 == 'e' || ch1 == 'i' || ch1 == 'o' || ch1 == 'u' || ch1 == 'A' || ch1 == 'E'
-					|| ch1 == 'I' || ch1 == 'O' || ch1 == 'U') {
-				if (ch2 == 'a' || ch2 == 'e' || ch2 == 'i' || ch2 == 'o' || ch2 == 'u' || ch2 == 'A' || ch2 == 'E'
-						|| ch2 == 'I' || ch2 == 'O' || ch2 == 'U') {
-					sb.setCharAt(i, ch2);
-					sb.setCharAt(j, ch1);
-					i++;
-				}
-				j--;
-			} else {
-				i++;
-			}
-		}
-		return sb.toString();
+        char[] chars = s.toCharArray();
+        int left = 0, right = chars.length - 1;
+
+        while (left < right) {
+            if (!isVowel(chars[left])) {
+                left++;
+                continue;
+            }
+            if (!isVowel(chars[right])) {
+                right--;
+                continue;
+            }
+            // Swap vowels
+            char temp = chars[left];
+            chars[left] = chars[right];
+            chars[right] = temp;
+            left++;
+            right--;
+        }
+        return new String(chars);
+    }
+	
+	@SuppressWarnings("unused")
+	private boolean isVowel2(char[] stringToChar, int i) {
+		boolean isSmallVowels = stringToChar[i] == 'a' || stringToChar[i] == 'e' || stringToChar[i] == 'i'
+				|| stringToChar[i] == 'o' || stringToChar[i] == 'u';
+		boolean isCapVowels = stringToChar[i] == 'A' || stringToChar[i] == 'E' || stringToChar[i] == 'I'
+				|| stringToChar[i] == 'O' || stringToChar[i] == 'U';
+		return isSmallVowels || isCapVowels;
 	}
 }
