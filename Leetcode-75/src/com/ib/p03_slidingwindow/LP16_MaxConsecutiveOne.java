@@ -38,6 +38,7 @@ class Solution16 {
 				}
 				left++;
 			}
+			
 			right++;
 		}
 
