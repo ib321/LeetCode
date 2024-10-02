@@ -41,6 +41,15 @@ There are no more pairs that sum up to 6, hence a total of 1 operation.
 - `1 <= nums[i] <= 10^9`
 - `1 <= k <= 10^9`
 
+### Hint 1
+The abstract problem asks to count the number of disjoint pairs with a given sum k.
+
+### Hint 2
+For each possible value x, it can be paired up with k - x.
+
+### Hint 3
+The number of such pairs equals to min(count(x), count(k-x)), unless that x = k / 2, where the number of such pairs will be floor(count(x) / 2).
+
 [LeetCode Problem URL](https://leetcode.com/problems/max-number-of-k-sum-pairs/description/?envType=study-plan-v2&envId=leetcode-75)
 
 ## Solution
@@ -55,17 +64,31 @@ public class LP13MaxNumberKsumpair {
 
 	public static void main(String[] args) {
 		System.out.println(new Solution13().maxOperations(new int[] { 1, 2, 3, 4 }, 5));
+		System.out.println(new Solution13().maxOperations(new int[] { 3, 1, 3, 4, 3 }, 6));
 
 	}
 }
 
 class Solution13 {
+
+	/*-Two pointer approach
+	 * 	Trick here is to sort the array then use two pointer
+	 * 	so we sort the array we start two pointer left(0) n right(len-1);
+	 * 	loop until left < right(i.e until two pointers meet at middle)
+	 * 	inside loop how to adjust the pointers:
+	 * 	add rigth and left if they sums up to k then right-- left++ and as 1 oprn happened so opr++
+	 * 	if addition is greater then k mean we need lower element right-- only keep left at same
+	 * 	if add is lower then k mean we need higher elem left++ keep right at same
+	 * 	return the opr count
+	 * 
+	 * 
+	 */
 	public int maxOperations(int[] nums, int k) {
 		int left = 0;
 		int right = nums.length - 1;
 		int oprCount = 0;
 		Arrays.sort(nums);
-		//System.out.println(Arrays.toString(nums));
+		// System.out.println(Arrays.toString(nums));
 		while (left < right) {
 			if (nums[left] + nums[right] == k) {
 				oprCount++;
@@ -79,4 +102,3 @@ class Solution13 {
 		return oprCount;
 	}
 }
-

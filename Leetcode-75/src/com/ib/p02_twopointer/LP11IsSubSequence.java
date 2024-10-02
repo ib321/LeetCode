@@ -8,8 +8,18 @@ public class LP11IsSubSequence {
 }
 
 class Solution11 {
+	/*-
+	 * Aim is to find if the s is substr of t i.e s can be created by deleting any or non char of t
+	 * 
+	 * Easy and cool idea:
+	 * 	loop for bigger length string
+	 * 	start a pointer with 0
+	 *  compare if any char matched the small str if it does increase pointer...
+	 *  check if pointer length equals substr length if yes return true.
+	 *  abcde -> ace is substr but not aec
+	 * 
+	 */
 	public boolean isSubsequence(String s, String t) {
-
 		int subLength = s.length();
 		if (subLength <= 0)
 			return true;
