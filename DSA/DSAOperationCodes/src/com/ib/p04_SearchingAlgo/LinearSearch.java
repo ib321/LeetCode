@@ -2,15 +2,15 @@ package com.ib.p04_SearchingAlgo;
 
 public class LinearSearch {
 	public static void main(String args[]) {
-		
+
 		int arr[] = { 2, 3, 4, 10, 40 };
 		int keytofind = 10;
 
 		int result = SolutionLS01.search(arr, keytofind);
 		if (result == -1)
-			System.out.print("Element not found in array");
+			System.out.print("Element not found");
 		else
-			System.out.print("Element Found at index " + result);
+			System.out.print("Element Found at " + result);
 	}
 }
 
